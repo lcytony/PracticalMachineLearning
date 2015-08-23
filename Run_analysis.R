@@ -1,6 +1,7 @@
 library(data.table)
 library(dplyr)
 library(caret)
+library(randomForest)
 fileUrl="https://d396qusza40orc.cloudfront.net/predmachlearn/pml-training.csv"
 download.file(fileUrl,destfile="e:/uconn/academic/coursera/Practical Machine Learning/ProjectTrain.csv")
 fileUrl="https://d396qusza40orc.cloudfront.net/predmachlearn/pml-testing.csv"
@@ -36,4 +37,4 @@ table(predTest,testing$classe)
 Test<-Test[,Predictor]
 testSD<-predict(PreObj,Test)
 testPC<-predict(preProc,testSD)
-predict(modFit,testPC,type="class")
+answer<-predict(modFit,testPC,type="class")
