@@ -29,7 +29,7 @@ training<-Train[inTrain,]
 testing<-Train[-inTrain,]
 ```
 ###Checking correlation between variable and listed highly correlated data
-```{r which(M>0.8,arr.ind=T)}
+```{r which}
 M<-abs(cor(training[,-1]))
 diag(M)<-0
 which(M>0.8,arr.ind=T)
