@@ -1,0 +1,71 @@
+##Practical Machine Learning Project
+###Loading require packages
+```{r}
+library(data.table)
+library(dplyr)
+library(caret)
+library(randomForest)
+```
+###Loading Data
+```{r}
+fileUrl="https://d396qusza40orc.cloudfront.net/predmachlearn/pml-training.csv"
+download.file(fileUrl,destfile="e:/uconn/academic/coursera/Practical Machine Learning/ProjectTrain.csv")
+fileUrl="https://d396qusza40orc.cloudfront.net/predmachlearn/pml-testing.csv"
+download.file(fileUrl,destfile="e:/uconn/academic/coursera/Practical Machine Learning/ProjectTest.csv")
+Train<-read.csv("e:/uconn/academic/coursera/Practical Machine Learning/ProjectTrain.csv")
+Test<-read.csv("e:/uconn/academic/coursera/Practical Machine Learning/ProjectTest.csv")
+```
+###Delete missing value
+```{r}
+Missing <- sapply(Test, function (x) any(is.na(x) | x == ""))
+Predictor <- names(Test)[!Missing & grepl("belt|arm|dumbbell|forearm", names(Missing))]
+Predictor
+Train<-Train[,c("classe",Predictor)]
+```
+###Devide train data into training data and testing data
+```{r}
+inTrain<-createDataPartition(y=Train$classe,p=0.7,list=FALSE)
+training<-Train[inTrain,]
+testing<-Train[-inTrain,]
+```
+###Checking correlation between variable and listed highly correlated data
+```{r}
+M<-abs(cor(training[,-1]))
+diag(M)<-0
+which(M>0.8,arr.ind=T)
+```
+###Preprocessing with centering and scaling
+```{r}
+PreObj<-preProcess(training[,-1])
+trainingSD<-predict(PreObj,training[,-1])
+```
+###Preprocessing with PCA with a explaination of 80% variance
+```{r}
+preProc<-preProcess(trainingSD,method="pca",thresh=0.8)
+trainingPC<-predict(preProc,trainingSD)
+```
+###Training data with random forest
+```{r}
+modFit<-randomForest(training$classe~.,data=trainingPC)
+```
+###Listing training data's confusion matrix
+```{r}
+pred<-predict(modFit,trainingPC,type="class")
+training$predictRight<-pred==training$classe
+table(pred,training$classe)
+```
+###Listing testing data's confusion matrix
+```{r}
+testingSD<-predict(PreObj,testing[,-1])
+testingPC<-predict(preProc,testingSD)
+predTest<-predict(modFit,testingPC,type="class")
+testing$predictRight<-predTest==testing$classe
+table(predTest,testing$classe)
+```
+###Applied model to test data
+```{r}
+Test<-Test[,Predictor]
+testSD<-predict(PreObj,Test)
+testPC<-predict(preProc,testSD)
+answer<-predict(modFit,testPC,type="class")
+```
