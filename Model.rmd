@@ -11,46 +11,6 @@ M<-abs(cor(training[,-1]))
 diag(M)<-0
 which(M>0.8,arr.ind=T)
 ```
-                 | row| col
------------------|----|----
-yaw_belt         |  3 |  1
-total_accel_belt |  4 |  1
-accel_belt_y     |  9 |  1
-accel_belt_z     | 10 |  1
-accel_belt_x     |  8 |  2
-magnet_belt_x    | 11 |  2
-roll_belt        |  1 |  3
-roll_belt        |  1 |  4
-accel_belt_y     |  9 |  4
-accel_belt_z     | 10 |  4
-pitch_belt       |  2 |  8
-magnet_belt_x    | 11 |  8
-roll_belt        |  1 |  9
-total_accel_belt |  4 |  9
-accel_belt_z     | 10 |  9
-roll_belt        |  1 | 10
-total_accel_belt |  4 | 10
-accel_belt_y     |  9 | 10
-pitch_belt       |  2 | 11
-accel_belt_x     |  8 | 11
-gyros_arm_y      | 19 | 18
-gyros_arm_x      | 18 | 19
-magnet_arm_x     | 24 | 21
-accel_arm_x      | 21 | 24
-magnet_arm_z     | 26 | 25
-magnet_arm_y     | 25 | 26
-accel_dumbbell_x | 34 | 28
-accel_dumbbell_z | 36 | 29
-gyros_dumbbell_z | 33 | 31
-gyros_forearm_z  | 46 | 31
-gyros_dumbbell_x | 31 | 33
-gyros_forearm_z  | 46 | 33
-pitch_dumbbell   | 28 | 34
-yaw_dumbbell     | 29 | 36
-gyros_forearm_z  | 46 | 45
-gyros_dumbbell_x | 31 | 46
-gyros_dumbbell_z | 33 | 46
-gyros_forearm_y  | 45 | 46
 
 We can see that there's a lots of data with high correlation. This leads me to proceed with PCA
 
@@ -74,15 +34,6 @@ pred<-predict(modFit,trainingPC,type="class")
 training$predictRight<-pred==training$classe
 table(pred,training$classe)
 ```
-
-
-   |  A  |   B |  C  |  D  |  E   | class.error
----|-----|-----|-----|-----|------|----------
-A  |3810 |  21 |  46 |  21 |   8  |0.02457757
-B  |  74 |2501 |  64 |  11 |   8  |0.05906697
-C  |  23 |  43 |2286 |  38 |   6  |0.04590985
-D  |  27 |  10 | 105 |2099 |  11  |0.06793961
-E  |   4 |  21 |  20 |  23 |2457  |0.02693069
 ###Listing testing data's confusion matrix
 ```{r}
 testingSD<-predict(PreObj,testing[,-1])
@@ -91,14 +42,6 @@ predTest<-predict(modFit,testingPC,type="class")
 testing$predictRight<-predTest==testing$classe
 table(predTest,testing$classe)
 ```
-
-predTest |  A  |  B  |  C  |  D  |  E
----------|-----|-----|-----|-----|-----
-       A |1631 |  21 |   7 |  13 |   4
-       B |   8 |1084 |  17 |  10 |  10
-       C |  20 |  31 | 980 |  38 |   5
-       D |  13 |   1 |  19 | 902 |   7
-       E |   2 |   2 |   3 |   1 |1056
 ###Applied model to test data
 ```{r}
 Test<-Test[,Predictor]
