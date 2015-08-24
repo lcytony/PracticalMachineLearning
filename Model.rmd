@@ -75,13 +75,13 @@ training$predictRight<-pred==training$classe
 table(pred,training$classe)
 ```
 Training data confusion matrix:
-  |  A  |   B |  C  |  D  |  E   | class.error
---|-----|-----|-----|-----|------|----------
-A |3810 |  21 |  46 |  21 |   8  |0.02457757
-B |  74 |2501 |  64 |  11 |   8  |0.05906697
-C |  23 |  43 |2286 |  38 |   6  |0.04590985
-D |  27 |  10 | 105 |2099 |  11  |0.06793961
-E |   4 |  21 |  20 |  23 |2457  |0.02693069
+   |  A  |   B |  C  |  D  |  E   | class.error
+---|-----|-----|-----|-----|------|----------
+A  |3810 |  21 |  46 |  21 |   8  |0.02457757
+B  |  74 |2501 |  64 |  11 |   8  |0.05906697
+C  |  23 |  43 |2286 |  38 |   6  |0.04590985
+D  |  27 |  10 | 105 |2099 |  11  |0.06793961
+E  |   4 |  21 |  20 |  23 |2457  |0.02693069
 ###Listing testing data's confusion matrix
 ```{r}
 testingSD<-predict(PreObj,testing[,-1])
