@@ -74,7 +74,8 @@ pred<-predict(modFit,trainingPC,type="class")
 training$predictRight<-pred==training$classe
 table(pred,training$classe)
 ```
-Training data confusion matrix:
+
+
    |  A  |   B |  C  |  D  |  E   | class.error
 ---|-----|-----|-----|-----|------|----------
 A  |3810 |  21 |  46 |  21 |   8  |0.02457757
@@ -90,7 +91,7 @@ predTest<-predict(modFit,testingPC,type="class")
 testing$predictRight<-predTest==testing$classe
 table(predTest,testing$classe)
 ```
-Out of sample error
+
 predTest |  A  |  B  |  C  |  D  |  E
 ---------|-----|-----|-----|-----|-----
        A |1631 |  21 |   7 |  13 |   4
