@@ -11,7 +11,7 @@ M<-abs(cor(training[,-1]))
 diag(M)<-0
 which(M>0.8,arr.ind=T)
 ```
-                  row  col
+                 | row| col
 -----------------|----|----
 yaw_belt         |  3 |  1
 total_accel_belt |  4 |  1
@@ -75,7 +75,7 @@ training$predictRight<-pred==training$classe
 table(pred,training$classe)
 ```
 Training data confusion matrix:
-     A     B     C     D     E    class.error
+  |  A  |   B |  C  |  D  |  E   | class.error
 --|-----|-----|-----|-----|------|----------
 A |3810 |  21 |  46 |  21 |   8  |0.02457757
 B |  74 |2501 |  64 |  11 |   8  |0.05906697
@@ -91,7 +91,7 @@ testing$predictRight<-predTest==testing$classe
 table(predTest,testing$classe)
 ```
 Out of sample error
-predTest    A     B     C     D     E
+predTest |  A  |  B  |  C  |  D  |  E
 ---------|-----|-----|-----|-----|-----
        A |1631 |  21 |   7 |  13 |   4
        B |   8 |1084 |  17 |  10 |  10
